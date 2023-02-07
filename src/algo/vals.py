@@ -1,7 +1,13 @@
-from typing import List
+from enum import Enum
+from typing import List, Union
 
 
-def vals(obj: object) -> List[str]:
+def vals(obj: Union[object, type]) -> List[str]:
+    if isinstance(obj, type):
+        if issubclass(obj, Enum):
+            return [e.value for e in obj]
+        obj = obj()
+
     return [
         obj.__getattribute__(attr)
         for attr in dir(obj)
