@@ -12,7 +12,8 @@ def scan(
 ) -> Dict[str, Any]:
     """
     read file from root repo directory
-    validate it against cls.schema(by_alias=True).get("properties", dict()).keys()
+    validate it against
+        cls.schema(by_alias=True).get("properties", dict()).keys()
     and return dict of read json
     """
     d = read(file)
