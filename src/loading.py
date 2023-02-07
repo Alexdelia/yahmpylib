@@ -1,7 +1,7 @@
 from math import ceil
 from os import get_terminal_size
 from time import time
-from typing import Generator, Iterable, List, Optional, TypeVar, Union
+from typing import Generator, Iterable, List, Optional, TypeVar
 
 T = TypeVar('T')
 
@@ -24,26 +24,16 @@ def loading(
     :return: Generator[T, None, int]: Generator of the iterable object.
         And return the size of the iterable object.
     """
-    if not w or w < 0:
-        w = get_terminal_size().columns - (SIZE - w if w else SIZE)
-    if w < 3:
-        w = 3
+    w = _reset_w(w)
 
-    size = 0
-    for _ in it:
-        size += 1
+    size = sum(1 for _ in it)
 
     if size <= 1:
         for item in it:
             yield item
         return size
 
-    if msgs:
-        m: Union[List[str], None] = list(msgs)
-        if len(m) != size:
-            m = None
-    else:
-        m = None
+    msgs = _validate_msgs(msgs, size)
 
     start = time()
     for i, item in enumerate(it):
@@ -61,10 +51,31 @@ def loading(
             end="\033[0m"
         )
 
-        if m:
-            print(f"\t\033[1m{m[i]}", end="\033[0m", flush=True)
+        if msgs:
+            print(f"\t\033[1m{msgs[i]}", end="\033[0m", flush=True)
 
         yield item
 
     print()
     return size
+
+
+def _reset_w(w: Optional[int] = None) -> int:
+    """
+    Resize the width of the bar.
+
+    :param w: int: Width of the bar.
+    :return: int: Resized width of the bar.
+    """
+    return max(3, get_terminal_size().columns - (SIZE - w if w else SIZE))
+
+
+def _validate_msgs(msgs: Optional[Iterable[str]],
+                   size: int) -> Optional[List[str]]:
+    """
+    Validate the messages.
+
+    :param msgs: Optional[Iterable[str]]: Messages.
+    :return: Optional[List[str]]: Validated messages.
+    """
+    return list(msgs) if msgs and len(list(msgs)) == size else None

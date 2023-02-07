@@ -43,17 +43,28 @@ def asrt(got: Any, expected: Any = EvalTrue(), *msg: str) -> Any:
 
 
 def _asrt_msg(got: Any, expected: Any, *msg: str) -> str:
-    if isinstance(expected, dict):
-        e = ("\n" + dumps(expected, indent=4)).replace("\n", "\n\033[32;1m")
-    else:
-        e = str(expected)
+    e = ("\n" + dumps(expected, indent=4)).replace("\n", "\n\033[32;1m") \
+        if isinstance(expected, dict) \
+        else str(expected)
 
-    if isinstance(got, dict):
-        g = "\n" + dumps(got, indent=4)
-    else:
-        g = str(got)
+    g = ("\n" + dumps(got, indent=4)).replace("\n", "\n\033[31;1m") \
+        if isinstance(got, dict) \
+        else str(got)
 
     m = ''.join(msg).replace(r'\G', g).replace(r'\E', e)
+
+    g += _asrt_msg_missing_extra(got, expected) or ''
+
+    return "\033[0m\033[1m" + \
+        m \
+        + f"\n\033[0m\t\033[1mexpected: \033[32;1m{e}" \
+        + f"\n\033[0m\t\033[1mgot: \033[31;1m{g}\033[0m"
+
+
+def _asrt_msg_missing_extra(got: Any, expected: Any) -> Optional[str]:
+    if not ((isinstance(got, dict) and isinstance(expected, dict)) or
+            (hasattr(got, "__iter__") and hasattr(expected, "__iter__"))):
+        return None
 
     if isinstance(got, dict) and isinstance(expected, dict):
         missing, extra = _diff_set(
@@ -64,21 +75,14 @@ def _asrt_msg(got: Any, expected: Any, *msg: str) -> str:
                 **expected
             },
         )
-        if missing:
-            g += f"\n\t\033[0m\033[1mmissing keys:\n\033[31;1m{missing}\033[0m"
-        if extra:
-            g += f"\n\t\033[0m\033[1mextra keys:\n\033[31;1m{extra}\033[0m"
-    elif hasattr(got, "__iter__") and hasattr(expected, "__iter__"):
+    else:
         missing, extra = _diff_set(got, expected)
-        if missing:
-            g += f"\n\t\033[0m\033[1mmissing:\n\033[31;1m{missing}\033[0m"
-        if extra:
-            g += f"\n\t\033[0m\033[1mextra:\n\033[31;1m{extra}\033[0m"
 
-    return "\033[0m\033[1m" + \
-        m \
-        + f"\n\033[0m\t\033[1mexpected: \033[32;1m{e}" \
-        + f"\n\033[0m\t\033[1mgot: \033[31;1m{g}\033[0m"
+    return \
+        f"\033[0m\033[1mmissing:\n\033[31;1m{missing}\033[0m" \
+        if missing else "" \
+        + f"\033[0m\033[1mextra:\n\033[31;1m{extra}\033[0m" \
+        if extra else ""
 
 
 K = TypeVar('K')
