@@ -3,7 +3,7 @@ from enum import Enum
 import pytest
 
 from src.attr.vals import vals
-from src.testing import asrt
+from src.testing.asrt import asrt
 
 
 class _OBJEnum(str, Enum):
