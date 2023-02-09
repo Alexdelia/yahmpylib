@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict, Optional
 
 import requests
 
-from bdump import bdump
+from src.io.bdump import bdump
 
 LOCAL_API_ADDRESS = "http://127.0.0.1:5000/"
 
