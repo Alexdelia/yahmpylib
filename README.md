@@ -12,3 +12,5 @@ Yet Another Hand Made Python Library
 		<img src="https://github.com/Alexdelia/yahmpylib/actions/workflows/pytest.yml/badge.svg" alt="pytest"/>
 	</a>
 </p>
+
+lib meant to be used with last version of python (3.11)
