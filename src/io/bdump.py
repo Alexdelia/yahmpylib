@@ -55,6 +55,8 @@ def _eval(
                 r = _try_json(json, q)
                 if r.is_err():
                     return r
+                else:
+                    json = r.unwrap()
 
     return Ok(json) if json else Err(str(json))
 
