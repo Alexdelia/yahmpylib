@@ -1,8 +1,7 @@
 from enum import Enum
-from typing import List, Union
 
 
-def vals(obj: Union[object, type]) -> List[str]:
+def vals(obj: object | type) -> list[str]:
     """
     returns a list of the values of the attributes of the given object or type
 

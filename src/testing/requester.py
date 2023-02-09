@@ -1,6 +1,6 @@
 import re
 from sys import stderr
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Optional
 
 import requests
 
@@ -13,7 +13,7 @@ def requester(
     endpoint: str,
     api_address: str = LOCAL_API_ADDRESS,
     method: Callable[[Any], requests.Response] = requests.get,
-    params: Optional[Dict[str, Any]] = None,
+    params: Optional[dict[str, Any]] = None,
     data: Optional[Any] = None,
     status_code: int = 200,
 ) -> requests.Response:

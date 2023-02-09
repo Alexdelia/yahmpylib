@@ -1,6 +1,6 @@
 import json
 from os.path import dirname, realpath
-from typing import Any, Dict, Iterable, Optional
+from typing import Any, Iterable, Optional
 
 PATH_TO_ROOT = "../"
 
@@ -9,7 +9,7 @@ def scan(
     cls,
     file: str,
     optional_keys: Optional[Iterable[str]] = None,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     read file from root repo directory
     validate it against
@@ -26,14 +26,14 @@ def scan(
     return d
 
 
-def read(file: str) -> Dict[str, Any]:
+def read(file: str) -> dict[str, Any]:
     return json.load(
         open(f"{dirname(realpath(__file__))}/{PATH_TO_ROOT}{file}", "r")
     )
 
 
 def validate(
-    d: Dict[str, Any],
+    d: dict[str, Any],
     keys: Iterable[str],
     file: str,
     optional_keys: Optional[Iterable[str]] = None,

@@ -1,7 +1,7 @@
 from math import ceil
 from os import get_terminal_size
 from time import time
-from typing import Generator, Iterable, List, Optional, TypeVar
+from typing import Generator, Iterable, Optional, TypeVar
 
 T = TypeVar('T')
 
@@ -71,7 +71,7 @@ def _reset_w(w: Optional[int] = None) -> int:
 
 
 def _validate_msgs(msgs: Optional[Iterable[str]],
-                   size: int) -> Optional[List[str]]:
+                   size: int) -> Optional[list[str]]:
     """
     Validate the messages.
 
