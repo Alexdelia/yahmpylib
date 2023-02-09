@@ -5,19 +5,19 @@ from typing import Any, Iterable, Optional, Tuple, TypeVar
 class EvalTrue:
 
     def __str__(self) -> str:
-        return "\033[0m\033[34;2;1mEvaluating to \033[32;2;1mTrue\033[0m"
+        return "\033[0m\033[34;2;1mevaluating to \033[32;2;1mTrue\033[0m"
 
     def __repr__(self) -> str:
-        return "\033[0m\033[34;2;1mEvaluating to \033[32;2;1mTrue\033[0m"
+        return "\033[0m\033[34;2;1mevaluating to \033[32;2;1mTrue\033[0m"
 
 
 class EvalFalse:
 
     def __str__(self) -> str:
-        return "\033[0m\033[34;2;1mEvaluating to \033[31;2;1mFalse\033[0m"
+        return "\033[0m\033[34;2;1mevaluating to \033[31;2;1mFalse\033[0m"
 
     def __repr__(self) -> str:
-        return "\033[0m\033[34;2;1mEvaluating to \033[31;2;1mFalse\033[0m"
+        return "\033[0m\033[34;2;1mevaluating to \033[31;2;1mFalse\033[0m"
 
 
 def asrt(got: Any, expected: Any = EvalTrue(), *msg: str) -> Any:

@@ -52,9 +52,18 @@ def _eval(
             json = literal_eval(json)
         except Exception:
             if q:
-                try:
-                    json = q.json()
-                except Exception:
-                    return Err(json)
+                r = _try_json(json, q)
+                if r.is_err():
+                    return r
 
     return Ok(json) if json else Err(str(json))
+
+
+def _try_json(
+    json: str,
+    q: Response,
+) -> Result[Any, str]:
+    try:
+        return Ok(q.json())
+    except Exception:
+        return Err(json)
