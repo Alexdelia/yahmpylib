@@ -70,12 +70,14 @@ def _reset_w(w: Optional[int] = None) -> int:
     return max(3, get_terminal_size().columns - (SIZE - w if w else SIZE))
 
 
-def _validate_msgs(msgs: Optional[Iterable[str]],
-                   size: int) -> Optional[list[str]]:
+def _validate_msgs(
+    msgs: Optional[Iterable[str]],
+    size: int,
+) -> Optional[list[str]]:
     """
     Validate the messages.
 
     :param msgs: Optional[Iterable[str]]: Messages.
-    :return: Optional[List[str]]: Validated messages.
+    :return: Optional[list[str]]: Validated messages.
     """
     return list(msgs) if msgs and len(list(msgs)) == size else None

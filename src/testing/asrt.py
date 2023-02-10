@@ -1,5 +1,5 @@
 from json import dumps
-from typing import Any, Iterable, Optional, Tuple, TypeVar
+from typing import Any, Iterable, Optional, TypeVar
 
 
 class EvalTrue:
@@ -92,7 +92,7 @@ def _diff_set(
     got: Iterable[K],
     expected: Iterable[K],
     d: Optional[dict[K, Any]] = None
-) -> Tuple[str, str]:
+) -> tuple[str, str]:
     g = frozenset(got)
     e = frozenset(expected)
 
